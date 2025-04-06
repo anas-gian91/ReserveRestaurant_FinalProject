@@ -50,6 +50,14 @@ const approveUser = async (req,res)=>{
         res.status(500).send({msg: "Error updating user status", error: error.message});
     }
 }
+const getPendingUsers = async (req, res) => {
+    try {
+        const pendingUsers = await User.find({ status: 'pending' }).select('-password');
+        res.status(200).send({ msg: 'Pending users fetched successfully', pendingUsers });
+    } catch (error){
+        res.status(500).send({ msg: 'Error fetching pending users', error: error.message });
+    }
+}
 const  loginUser = async (req, res) => {
     try{
        const {email, password} = req.body;
@@ -138,5 +146,6 @@ module.exports = {
     getAllUsers,
     getUserById,
     updateUser,
-    deleteUser
+    deleteUser,
+    getPendingUsers
 };
