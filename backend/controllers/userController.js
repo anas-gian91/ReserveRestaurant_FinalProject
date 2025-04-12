@@ -31,46 +31,17 @@ const registerUser = async (req, res)=>{
         res.status(500).send({msg: "Error creating user", error: error.message});
     }
 }
-const approveUser = async (req,res)=>{
-    try{
-        const {status} = req.body;
-        if(!['approved','rejected'].includes(status)){
-            return res.status(400).send({msg:"Invalid status. Choose either 'approved' or 'rejected'"});
-        }
-        const user = await User.findByIdAndUpdate(
-            req.params.id,
-            {status},
-            {new: true}
-        );
-        if(!user){
-            return res.status(404).send({msg:"User not found"});
-        }
-        res.status(200).send({msg:`User status updated successfully to ${status}`, user});
-    }catch(error){
-        res.status(500).send({msg: "Error updating user status", error: error.message});
-    }
-}
-const getPendingUsers = async (req, res) => {
-    try {
-        const pendingUsers = await User.find({ status: 'pending' }).select('-password');
-        res.status(200).send({ msg: 'Pending users fetched successfully', pendingUsers });
-    } catch (error){
-        res.status(500).send({ msg: 'Error fetching pending users', error: error.message });
-    }
-}
 const  loginUser = async (req, res) => {
     try{
-       const {email, password} = req.body;
-       if(!email || !password){
+       const {emailOrUsername, password} = req.body;
+       if(!emailOrUsername|| !password){
            return res.status(400).send({msg:"All fields are required"});
        }
-       let user = await User.findOne({email});
+       let user = await User.findOne({$or:[{email:emailOrUsername},{username:emailOrUsername}]
+    });
        if(!user){
            return res.status(404).send({msg:"User not found"});
        }
-        if(user.status !== 'approved'){
-            return res.status(403).send({msg:"Your account is not approved yet. Please wait for admin approval."});
-        }
          let isPasswordCorrect = await bcrypt.compare(password, user.password);
          if(!isPasswordCorrect){
               return res.status(400).send({msg:"Invalid credentials"});
@@ -80,7 +51,7 @@ const  loginUser = async (req, res) => {
              email: user.email,
              role: user.role,
          };
-         const token = jwt.sign(payload, process.env.SECRET_KEY);
+         let token = jwt.sign(payload, process.env.SECRET_KEY);
         res.status(200).send({msg:"Login succesful", token, user: {id: user._id, username: user.username, role: user.role}});   
     }catch(error){
         res.status(500).send({msg: "Error logging in", error: error.message});
@@ -107,8 +78,8 @@ const getUserById = async (req, res) => {
 };
 const updateUser = async (req, res) => {
     try{
-        const {username,password,Fname,Lname,DateOfBirth,gender,role} = req.body;
-        let updateFields = {username,Fname,Lname,DateOfBirth,gender,role};
+        const {username,password,Fname,Lname,DateOfBirth,gender,status} = req.body;
+        let updateFields = {username,Fname,Lname,DateOfBirth,gender,status};
         if(password){
             updateFields.password = await bcrypt.hash(password, saltRound);
         }

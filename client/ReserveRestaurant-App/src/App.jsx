@@ -5,6 +5,8 @@ import About from './components/About';
 import Login from './components/User_Component/Login';
 import Register from './components/User_Component/Register';
 import Contact from './components/contactform';
+import Reservations from './components/Reservation_Components/Reservations';
+import Menu from './components/Menu_Component/mainMenu';
 
 function App() {
   return(
@@ -14,6 +16,7 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/reservation" element={<Reservations/>}/>
+      <Route path="/menu" element={<Menu/>}/>
       <Route path="/contact" element = {<Contact/>}/>
       <Route path="/login" element={<Login/>}/>
       <Route path="/register" element={<Register/>}/>

@@ -1,15 +1,14 @@
 const express = require("express");
-const { registerUser, loginUser, getUserById, getPendingUsers, approveUser, getAllUsers,updateUser,deleteUser} = require("../controllers/userController");
-const {authMiddleware, authRoleMiddleware, checkUserStatus} = require("../middleware/authMiddle");
+const { registerUser, loginUser, getUserById, getAllUsers,updateUser,deleteUser} = require("../controllers/userController");
+const {authMiddleware} = require("../middleware/authMiddle");
 const router = express.Router();
 
-router.get("/Users",authMiddleware,checkUserStatus, getAllUsers);
-router.get("/Users/:id", authMiddleware,checkUserStatus, getUserById);
+router.get("/Users",authMiddleware, getAllUsers);
+router.get("/Users/:id", authMiddleware, getUserById);
 router.post("/user/register", registerUser);
-router.post("/user/login", loginUser);
-router.put("/user/Users/:id",authMiddleware,checkUserStatus, updateUser);
-router.delete("/user/Users/:id",authMiddleware,checkUserStatus, deleteUser);
-router.put("/user/verify/:id", authMiddleware,checkUserStatus, authRoleMiddleware(["admin"]),approveUser);
-router.get("/user/pending", authMiddleware,checkUserStatus, authRoleMiddleware(["admin"]),getPendingUsers);
+router.post("/user/login",loginUser);
+router.put("/user/Users/:id",authMiddleware, updateUser);
+router.delete("/user/Users/:id",authMiddleware, deleteUser);
+
 
 module.exports = router;

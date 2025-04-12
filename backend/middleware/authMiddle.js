@@ -35,18 +35,4 @@ const authRoleMiddleware = (allowedRoles) => {
     console.error("Error in authRoleMiddleware" , error.message);
     res.status(403).send({ msg: "Unauthorized User", error: error.message });
   }}};
-const checkUserStatus = async (req, res, next)=>{
-  try{
-    const user = await User.findById(req.user.id);
-    if(!user){
-      return res.status(404).send({msg:"User not found"});
-    }
-    if(user.status !== "approved"){
-      return res.status(403).send({msg:"Your account is not approved yet. Please wait for admin approval."});
-    }
-    next();
-  }catch(error){
-    res.status(500).send({msg:"Error checking user status", error:error.message});
-  }
-};
 module.exports = {authMiddleware, authRoleMiddleware, checkUserStatus};
