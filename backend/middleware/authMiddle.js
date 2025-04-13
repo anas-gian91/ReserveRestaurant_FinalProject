@@ -35,4 +35,4 @@ const authRoleMiddleware = (allowedRoles) => {
     console.error("Error in authRoleMiddleware" , error.message);
     res.status(403).send({ msg: "Unauthorized User", error: error.message });
   }}};
-module.exports = {authMiddleware, authRoleMiddleware, checkUserStatus};
+module.exports = {authMiddleware, authRoleMiddleware};
