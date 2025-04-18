@@ -7,18 +7,20 @@ import Register from './components/User_Component/Register';
 import Contact from './components/contactform';
 import Reservations from './components/Reservation_Components/Reservations';
 import Menu from './components/Menu_Component/mainMenu';
+import GuestForm from './components/User_Component/GuestForm';
 
 function App() {
   return(
     <Router>
       <Navigator/>
       <Routes>
-      <Route path="/home" element={<Home/>}/>
+      <Route path="/" element={<Home/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/reservation" element={<Reservations/>}/>
       <Route path="/menu" element={<Menu/>}/>
       <Route path="/contact" element = {<Contact/>}/>
       <Route path="/login" element={<Login/>}/>
+      <Route path="/guest" element={<GuestForm/>}/>
       <Route path="/register" element={<Register/>}/>
       <Route path="*" element={<h1>402 Page not found</h1>}/>
       </Routes>
