@@ -8,10 +8,10 @@ const registerUser = async (req, res) => {
     console.log("Incoming register body:", req.body); // Logging incoming request
     
     try {
-        const { username, email, password, Fname, Lname, DateOfBirth, gender, role } = req.body;
+        const { username, email, password, Fname, Lname, DateOfBirth, phone, gender, role } = req.body;
 
         // Validation checks
-        if (!username || !email || !password || !Fname || !Lname || !DateOfBirth || !gender) {
+        if (!username || !email || !password || !Fname || !Lname || !DateOfBirth ||phone || !gender) {
             return res.status(400).send({ msg: "All fields are required" });
         }
 
@@ -48,6 +48,7 @@ const registerUser = async (req, res) => {
             Fname,
             Lname,
             DateOfBirth: dateOfBirth,
+            phone,
             gender,
             role: role || 'user', // Default to 'user' if no role provided
             status: 'pending'
@@ -128,8 +129,8 @@ const getUserById = async (req, res) => {
 };
 const updateUser = async (req, res) => {
     try{
-        const {username,password,Fname,Lname,DateOfBirth,gender,status} = req.body;
-        let updateFields = {username,Fname,Lname,DateOfBirth,gender,status};
+        const {username,password,Fname,Lname,DateOfBirth,phone,gender,status} = req.body;
+        let updateFields = {username,Fname,Lname,DateOfBirth,phone,gender,status};
         if(password){
             updateFields.password = await bcrypt.hash(password, saltRound);
         }

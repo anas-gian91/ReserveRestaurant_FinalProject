@@ -11,6 +11,7 @@ const Register = () => {
         Fname: '',
         Lname: '',
         DateOfBirth: '',
+        phone:'',
         gender: '',
     });
 
@@ -131,6 +132,13 @@ const Register = () => {
                     type="date"
                     name="DateOfBirth"
                     placeholder="Date of Birth"
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="text"
+                    name="phone"
+                    placeholder="Phone Number"
                     onChange={handleChange}
                     required
                 />

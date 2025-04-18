@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const reservationSchema = new monggoose.Schema({
-    user:{
+const reservationSchema = new mongoose.Schema({
+    userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required:true
+        required: true
     },
     reservationDate:{
      type: Date,
