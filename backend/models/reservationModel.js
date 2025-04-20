@@ -3,8 +3,11 @@ const reservationSchema = new mongoose.Schema({
     userId:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true
+        default:null
     },
+    guestId: { type: mongoose.Schema.Types.ObjectId, 
+        ref: "Guest", 
+        default: null },
     reservationDate:{
      type: Date,
      required:true   

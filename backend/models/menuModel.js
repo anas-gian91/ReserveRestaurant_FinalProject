@@ -1,40 +1,27 @@
 const mongoose = require('mongoose');
+
 const menuSchema = new mongoose.Schema({
-    productname:{
+    productName: {
         type: String,
         required: true
     },
-    productCategory:{
+    productCategory: {
         type: String,
         required: true
     },
-    productPrice:{
+    productPrice: {
         type: Number,
         required: true
     },
-    productQuantity:{
+    productQuantity: {
         type: Number,
         required: true
     },
-    productstatus:{
+    productStatus: {
         type: String,
         enum: ['available', 'out of stock'],
         default: 'available'
-    },
-    orderStatus:{
-        type: String,
-        enum: ['pending', 'completed', 'canceled'],
-        default: 'pending'
-    },
-    orderBy:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    orderDate:{
-        type: Date,
-        required: true,
-        default: Date.now
-    },
-},
-{timestamps: true});
+    }
+}, { timestamps: true });
+
+module.exports = mongoose.model('Menu', menuSchema);

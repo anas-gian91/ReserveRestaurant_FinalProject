@@ -24,12 +24,12 @@ const GuestForm = () => {
     setSuccess('');
 
     try {
-      const response = await axios.post('http://localhost:8020/api/guest/guests', formData);
+      const response = await axios.post('http://localhost:8020/guest/guests', formData);
       setSuccess('Guest created successfully!');
       setFormData({ email: '', Fname: '', Lname: '', DateOfBirth: '', phone: '', gender: '' });
       console.log(response.data); // optional
     } catch (err) {
-      setError(err.response?.data?.error || 'Something went wrong.');
+      setError(err.response?.data?.error || err.message || 'Something went wrong.');
     }
   };
 
@@ -41,24 +41,24 @@ const GuestForm = () => {
 
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label>Email:</label>
-          <input type="email" name="email" className="form-control" value={formData.email} onChange={handleChange} required />
+          <label htmlFor="email">Email:</label>
+          <input id="email" type="email" name="email" className="form-control" value={formData.email} onChange={handleChange} required />
         </div>
         <div className="mb-3">
-          <label>First Name:</label>
-          <input type="text" name="Fname" className="form-control" value={formData.Fname} onChange={handleChange} required />
+          <label htmlFor="Fname">First Name:</label>
+          <input id="Fname" type="text" name="Fname" className="form-control" value={formData.Fname} onChange={handleChange} required />
         </div>
         <div className="mb-3">
-          <label>Last Name:</label>
-          <input type="text" name="Lname" className="form-control" value={formData.Lname} onChange={handleChange} required />
+          <label htmlFor="Lname">Last Name:</label>
+          <input id="Lname" type="text" name="Lname" className="form-control" value={formData.Lname} onChange={handleChange} required />
         </div>
         <div className="mb-3">
-          <label>Date of Birth:</label>
-          <input type="date" name="DateOfBirth" className="form-control" value={formData.DateOfBirth} onChange={handleChange} required />
+          <label htmlFor="DateOfBirth">Date of Birth:</label>
+          <input id="DateOfBirth" type="date" name="DateOfBirth" className="form-control" value={formData.DateOfBirth} onChange={handleChange} required />
         </div>
         <div className="mb-3">
-          <label>Phone:</label>
-          <input type="text" name="phone" className="form-control" value={formData.phone} onChange={handleChange} required />
+          <label htmlFor="phone">Phone:</label>
+          <input id="phone" type="text" name="phone" className="form-control" value={formData.phone} onChange={handleChange} required />
         </div>
         <div className="mb-3">
           <label>Gender:</label><br />

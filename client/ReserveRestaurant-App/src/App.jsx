@@ -5,7 +5,7 @@ import About from './components/About';
 import Login from './components/User_Component/Login';
 import Register from './components/User_Component/Register';
 import Contact from './components/contactform';
-import Reservations from './components/Reservation_Components/Reservations';
+import CombinedForm from './components/Reservation_Components/ReservationCombined';
 import Menu from './components/Menu_Component/mainMenu';
 import GuestForm from './components/User_Component/GuestForm';
 
@@ -16,7 +16,7 @@ function App() {
       <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/about" element={<About/>}/>
-      <Route path="/reservation" element={<Reservations/>}/>
+      <Route path="/reservation" element={<CombinedForm/>}/>
       <Route path="/menu" element={<Menu/>}/>
       <Route path="/contact" element = {<Contact/>}/>
       <Route path="/login" element={<Login/>}/>

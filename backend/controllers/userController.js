@@ -11,9 +11,10 @@ const registerUser = async (req, res) => {
         const { username, email, password, Fname, Lname, DateOfBirth, phone, gender, role } = req.body;
 
         // Validation checks
-        if (!username || !email || !password || !Fname || !Lname || !DateOfBirth ||phone || !gender) {
+        if (!username || !email || !password || !Fname || !Lname || !DateOfBirth || !phone || !gender) {
             return res.status(400).send({ msg: "All fields are required" });
-        }
+          }
+          
 
         // Ensure DateOfBirth is a valid Date format
         const dateOfBirth = new Date(DateOfBirth);
