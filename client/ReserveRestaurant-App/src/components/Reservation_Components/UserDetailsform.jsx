@@ -1,7 +1,7 @@
 const UserDetailsForm = () => {
     return (
         <div className="container my-4">
-            <h2 className="mb-4">Guest Details</h2>
+            <h2 className="mb-4">User/Guest Details</h2>
 
             <div className="mb-3">
                 <label htmlFor="Fname" className="form-label">First Name:</label>

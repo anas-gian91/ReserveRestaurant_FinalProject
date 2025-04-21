@@ -18,7 +18,7 @@ const LoginForm = () => {
             const response = await axios.post('http://localhost:8020/user/login', formData);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
-            navigate('/home');
+            navigate('/');
         } catch (error) {
             setError(error.response?.data?.msg || 'Login failed. Please try again.');
         }
