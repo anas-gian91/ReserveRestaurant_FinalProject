@@ -46,9 +46,7 @@ const ReservationCombined = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let url = null; // Initialize userId here
-        let userId = null; // Initialize userId here
-
+    
         const guestData = {
             Fname: formData.Fname,
             Lname: formData.Lname,
@@ -57,49 +55,29 @@ const ReservationCombined = () => {
             phone: formData.phone,
             gender: formData.gender,
         };
-
-   ;
-
+    
+        const reservationData = {
+            reservationDate: formData.reservationDate,
+            reservationTime: formData.reservationTime,
+            numberOfPeople: formData.numberOfPeople,
+            place_category: formData.place_category,
+            noOfTable: formData.noOfTable,
+        };
+    
         try {
-            if(localStorage.getItem('user')){
-                userId = JSON.parse(localStorage.getItem('user')).id;
-                const reservationData = {
-                    reservationDate: formData.reservationDate,
-                    reservationTime: formData.reservationTime,
-                    numberOfPeople: formData.numberOfPeople,
-                    place_category: formData.place_category,
-                    noOfTable: formData.noOfTable,
-                    userId: userId,
-                
-                }
-              
-                 url = `http://localhost:8020/reserve/reservation/create`
-                 let response = await axios.post(url,{reservationData})
-                 console.log(response.data)
-                   alert(response.data.msg)
-
-            }else{
-                const guestResponse = await axios.post('http://localhost:8020/guest/guests', guestData);
-                const guestId = guestResponse.data._id;
-                
-            
-               let reservationData = {
-                    reservationDate: formData.reservationDate,
-                    reservationTime: formData.reservationTime,
-                    numberOfPeople: formData.numberOfPeople,
-                    place_category: formData.place_category,
-                    noOfTable: formData.noOfTable,
-                    guestId: guestId,
-                    
-                }
-                url = `http://localhost:8020/reserve/reservation/create`;
-                let  response = await axios.post(url,{reservationData,guestData})
-                console.log(response.data)
-                alert(response.data.msg)
-                // Handle the response as needed
+            // Authenticated user
+            const user = localStorage.getItem('user');
+            if (user) {
+                reservationData.userId = JSON.parse(user).id;
             }
     
-        
+            const response = await axios.post('http://localhost:8020/reserve/reservation/create', {
+                reservationData,
+                guestData: !reservationData.userId ? guestData : undefined, // only include guestData if not logged in
+            });
+    
+            console.log(response.data);
+            alert(response.data.msg);
         } catch (error) {
             console.error(error);
             const msg = error.response?.data?.msg || 'Something went wrong.';

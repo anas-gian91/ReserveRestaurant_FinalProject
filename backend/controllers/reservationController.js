@@ -1,57 +1,47 @@
 const Reservation = require('../models/reservationModel');
 const Guest = require('../models/guestModel');
+
 const ReservationCreate = async (req, res) => {
-    let guestData;
-    try{
-     
-       
-        if(req.body.guestData !== undefined){
-           guestData = {
-                email: req.body.guestData.email ||null,
-                Fname: req.body.guestData.Fname||null,
-                Lname: req.body.guestData.Lname||null,
-                DateOfBirth: req.body.guestData.DateOfBirth||null,
-                phone: req.body.guestData.phone||null,
-                gender: req.body.guestData.gender||null,
-            }
-console.log("Guest data:", guestData);  
+    try {
+        const { reservationData, guestData } = req.body;
+
+        if (!reservationData) {
+            return res.status(400).json({ msg: "Missing reservation data" });
         }
-          
-        let reservationData = {
-            reservationDate:req.body.reservationData.reservationDate,
-            reservationTime:req.body.reservationData.reservationTime,
-            numberOfPeople:req.body.reservationData.numberOfPeople,
-            place_category:req.body.reservationData.place_category,
-            noOfTable:req.body.reservationData.noOfTable,
-            userId: req.body.reservationData.userId || null,
-            guestId: req.body.reservationData.guestId || null,
+
+        // If userId is present, create reservation for authenticated user
+        if (reservationData.userId) {
+            const reservation = await Reservation.create({
+                ...reservationData,
+                status: 'pending',
+            });
+            return res.status(201).json({ msg: "User Reservation created successfully", reservation });
+        }
+
+        // Handle guest logic
+        if (!guestData || !guestData.email) {
+            return res.status(400).json({ msg: "Guest data with valid email required" });
+        }
+
+        // Check if guest already exists
+        let guest = await Guest.findOne({ email: guestData.email });
+
+        if (!guest) {
+            guest = await Guest.create(guestData);
+            console.log("New guest created:", guest);
+        }
+
+        const reservation = await Reservation.create({
+            ...reservationData,
+            guestId: guest._id,
             status: 'pending',
-        } 
+        });
 
-        if (req.body.reservationData.userId && req.body.reservationData.userId !== null) {
-            reservationData.userId = req.body.reservationData.userId; // Authenticated user ID  
-            // Authenticated user
-           await Reservation.create(reservationData);
-            return res.status(201).json({ msg: "User Reservation created successfully" });
-        } else {
-            console.log("Guest reservation data:", guestData);
-            // Guest reservation
+        return res.status(201).json({ msg: "Guest Reservation created successfully", reservation });
 
-            let guest = await Guest.findOne({ email: guestData.email });
-            if (!guest) {
-                guest = await Guest.create(guestData);
-                console.log("Guest created:", guest);
-                reservationData.guestId = guest._id;
-                const reservation = await Reservation.create({...reservationData,guestId:guest._id});
-                res.status(201).json({ msg: "Guest Reservation created successfully", reservation });
-            }
-    
-          
-        }
-   
     } catch (error) {
         console.error("Reservation creation error:", error);
-        res.status(400).json({ msg: "Error creating reservation", error: error.message });
+        res.status(500).json({ msg: "Error creating reservation", error: error.message });
     }
 };
 const ReservationGetById = async (req, res) => {
