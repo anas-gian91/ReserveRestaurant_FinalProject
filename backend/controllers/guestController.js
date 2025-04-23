@@ -20,6 +20,17 @@ const getGuestById =async(req,res)=>{
         res.status(500).send({error:error.message});
     }
 }
+const getGuestByEmail =async(req,res)=>{
+    try{
+        const guest = await Guest.findOne({email:req.params.email});
+        if(!guest){
+            return res.status(404).send({error:'Guest not found'});
+        }
+        res.status(201).send(guest);
+    }catch(error){
+        res.status(500).send({error:error.message});
+    }
+};
 
 const updateGuest =async(req,res)=>{
     try{
@@ -48,6 +59,7 @@ const deleteGuest =async(req,res)=>{
 module.exports={
     createGuest,
     getGuestById,
+    getGuestByEmail,
     updateGuest,
     deleteGuest
 };

@@ -1,42 +1,48 @@
-const UserDetailsForm = () => {
+import React from 'react';
+
+const UserDetailsForm = ({ formData, handleChange, onEmailBlur }) => {
     return (
-        <div className="container my-4">
-            <h2 className="mb-4">User/Guest Details</h2>
+        <>
+            <h2 className="mb-3">Guest/User Details</h2>
+            {[
+                { name: 'Fname', label: 'First Name' },
+                { name: 'Lname', label: 'Last Name' },
+                { name: 'email', label: 'Email', type: 'email' },
+                { name: 'DateOfBirth', label: 'Date of Birth', type: 'date' },
+                { name: 'phone', label: 'Phone' },
+                { name: 'gender', label: 'Gender', type: 'select' },
+            ].map(({ name, label, type = 'text' }) => (
+                <div className="mb-3" key={name}>
+                    <label htmlFor={name} className="form-label">{label}</label>
 
-            <div className="mb-3">
-                <label htmlFor="Fname" className="form-label">First Name:</label>
-                <input type="text" className="form-control" id="Fname" name="Fname" placeholder="First Name" required />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="Lname" className="form-label">Last Name:</label>
-                <input type="text" className="form-control" id="Lname" name="Lname" placeholder="Last Name" required />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="email" className="form-label">Email:</label>
-                <input type="email" className="form-control" id="email" name="email" placeholder="Email" required />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="DateOfBirth" className="form-label">Date of Birth:</label>
-                <input type="date" className="form-control" id="DateOfBirth" name="DateOfBirth" required />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="phone" className="form-label">Phone Number:</label>
-                <input type="text" className="form-control" id="phone" name="phone" placeholder="Phone Number" required />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="gender" className="form-label">Gender:</label>
-                <select className="form-select" id="gender" name="gender" required>
-                    <option value="">Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                </select>
-            </div>
-        </div>
+                    {type === 'select' ? (
+                        <select
+                            className="form-select"
+                            id={name}
+                            name={name}
+                            value={formData[name] || ''}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    ) : (
+                        <input
+                            type={type}
+                            className="form-control"
+                            id={name}
+                            name={name}
+                            value={formData[name] || ''}
+                            onChange={handleChange}
+                            onBlur={name === 'email' ? (e) => onEmailBlur && onEmailBlur(e.target.value) : undefined}
+                            required
+                        />
+                    )}
+                </div>
+            ))}
+        </>
     );
 };
 

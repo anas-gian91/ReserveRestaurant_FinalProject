@@ -1,32 +1,109 @@
-import UserDetailsForm from "./UserDetailsform";
-import ReservationForm from "./ReservationForm";
+import React, { useState } from 'react';
+import axios from 'axios';
+import UserDetailsForm from './UserDetailsform';
+import ReservationForm from './ReservationForm';
 
-const CombinedForm = () => {
+const ReservationCombined = () => {
+    const [formData, setFormData] = useState({
+        Fname: '',
+        Lname: '',
+        email: '',
+        DateOfBirth: '',
+        phone: '',
+        gender: '',
+        reservationDate: '',
+        reservationTime: '',
+        numberOfPeople: '',
+        place_category: '',
+        noOfTable: '',
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+       
+    };
+ 
+
+    // ⬇️ Move this outside of handleSubmit
+    const handleEmailBlur = async (email) => {
+        try {
+            const res = await axios.get(`/guest/guests/email/${email}`); // Adjust route if needed
+            const guest = res.data;
+
+            setFormData(prev => ({
+                ...prev,
+                Fname: guest.Fname || '',
+                Lname: guest.Lname || '',
+                DateOfBirth: guest.DateOfBirth || '',
+                phone: guest.phone || '',
+                gender: guest.gender || '',
+            }));
+        } catch (error) {
+            console.error('No guest found for this email.',error);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
+        let url = null; // Initialize userId here
+        let userId = null; // Initialize userId here
+
+        const guestData = {
+            Fname: formData.Fname,
+            Lname: formData.Lname,
+            email: formData.email,
+            DateOfBirth: formData.DateOfBirth,
+            phone: formData.phone,
+            gender: formData.gender,
+        };
+
+   ;
 
         try {
-            const response = await fetch('/reserve/reservation/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            });
+            if(localStorage.getItem('user')){
+                userId = JSON.parse(localStorage.getItem('user')).id;
+                const reservationData = {
+                    reservationDate: formData.reservationDate,
+                    reservationTime: formData.reservationTime,
+                    numberOfPeople: formData.numberOfPeople,
+                    place_category: formData.place_category,
+                    noOfTable: formData.noOfTable,
+                    userId: userId,
+                
+                }
+              
+                 url = `http://localhost:8020/reserve/reservation/create`
+                 let response = await axios.post(url,{reservationData})
+                 console.log(response.data)
+                   alert(response.data.msg)
 
-            const result = await response.json();
-
-            if (response.ok) {
-                alert('Reservation successful!');
-                console.log(result);
-            } else {
-                alert(`Error: ${result.msg}`);
+            }else{
+                const guestResponse = await axios.post('http://localhost:8020/guest/guests', guestData);
+                const guestId = guestResponse.data._id;
+                
+            
+               let reservationData = {
+                    reservationDate: formData.reservationDate,
+                    reservationTime: formData.reservationTime,
+                    numberOfPeople: formData.numberOfPeople,
+                    place_category: formData.place_category,
+                    noOfTable: formData.noOfTable,
+                    guestId: guestId,
+                    
+                }
+                url = `http://localhost:8020/reserve/reservation/create`;
+                let  response = await axios.post(url,{reservationData,guestData})
+                console.log(response.data)
+                alert(response.data.msg)
+                // Handle the response as needed
             }
+    
+        
         } catch (error) {
-            console.error('Error submitting reservation:', error);
-            alert('Something went wrong while submitting your reservation.');
+            console.error(error);
+            const msg = error.response?.data?.msg || 'Something went wrong.';
+            alert(msg);
         }
     };
 
@@ -35,19 +112,14 @@ const CombinedForm = () => {
             <div className="card shadow p-4">
                 <h1 className="mb-4 text-center">Make a Reservation</h1>
                 <form onSubmit={handleSubmit}>
-                    {/* Guest or User Details */}
-                    <div className="mb-4">
-                        <UserDetailsForm />
-                    </div>
-
+                    <UserDetailsForm
+                        formData={formData}
+                        handleChange={handleChange}
+                        onEmailBlur={handleEmailBlur}
+                    />
                     <hr />
-
-                    {/* Reservation Info */}
-                    <div className="mb-4">
-                        <ReservationForm />
-                    </div>
-
-                    <div className="text-center">
+                    <ReservationForm formData={formData} handleChange={handleChange} />
+                    <div className="text-center mt-4">
                         <button type="submit" className="btn btn-primary btn-lg">
                             Submit
                         </button>
@@ -58,4 +130,4 @@ const CombinedForm = () => {
     );
 };
 
-export default CombinedForm;
+export default ReservationCombined;

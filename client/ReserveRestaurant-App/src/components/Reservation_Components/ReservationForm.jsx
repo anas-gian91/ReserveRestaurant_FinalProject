@@ -1,41 +1,48 @@
-const ReservationForm = () => {
+const ReservationForm = ({ formData, handleChange }) => {
     return (
         <div className="container my-4">
             <h2 className="mb-4">Reservation Details</h2>
 
-            <div className="mb-3">
-                <label htmlFor="reservationDate" className="form-label">Date of Reservation:</label>
-                <input type="date" className="form-control" id="reservationDate" name="reservationDate" required />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="reservationTime" className="form-label">Time of Reservation:</label>
-                <input type="time" className="form-control" id="reservationTime" name="reservationTime" required />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="numberOfPeople" className="form-label">Number of Guests:</label>
-                <input type="number" className="form-control" id="numberOfPeople" name="numberOfPeople" min="1" required />
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="place_category" className="form-label">Venue:</label>
-                <select className="form-select" id="place_category" name="place_category" required>
-                    <option value="">Select venue</option>
-                    <option value="Terrace">Terrace</option>
-                    <option value="Indoor">Indoor</option>
-                    <option value="Outdoor">Outdoor</option>
-                    <option value="Private Room">Private Room</option>
-                    <option value="Business Class">Business Class</option>
-                </select>
-            </div>
-
-            <div className="mb-3">
-                <label htmlFor="noOfTable" className="form-label">Table:</label>
-                <input type="number" className="form-control" id="noOfTable" name="noOfTable" min="1" required />
-            </div>
+            {[
+                { name: 'reservationDate', label: 'Date of Reservation', type: 'date' },
+                { name: 'reservationTime', label: 'Time of Reservation', type: 'time' },
+                { name: 'numberOfPeople', label: 'Number of Guests', type: 'number', min: 1 },
+                { name: 'place_category', label: 'Venue', type: 'select', options: ['Terrace', 'Indoor', 'Outdoor', 'Private Room', 'Business Class'] },
+                { name: 'noOfTable', label: 'Table', type: 'number', min: 1 },
+            ].map(({ name, label, type, options, min }) => (
+                <div className="mb-3" key={name}>
+                    <label htmlFor={name} className="form-label">{label}</label>
+                    {type === 'select' ? (
+                        <select
+                            className="form-select"
+                            id={name}
+                            name={name}
+                            value={formData[name] || ''}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="">Select {label}</option>
+                            {options.map((opt) => (
+                                <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                        </select>
+                    ) : (
+                        <input
+                            type={type}
+                            className="form-control"
+                            id={name}
+                            name={name}
+                            value={formData[name] || ''}
+                            onChange={handleChange}
+                            required
+                            {...(min ? { min } : {})}
+                        />
+                    )}
+                </div>
+            ))}
         </div>
     );
 };
 
 export default ReservationForm;
+
