@@ -5,6 +5,7 @@ const userRoutes = require("./routes/userRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
 const guestRoutes = require("./routes/guestRoutes");
 const emailRoutes = require("./routes/emailRoutes");
+const menuRoutes = require("./routes/menuRoutes");
 const port = process.env.PORT;
 
 const app = express();
@@ -17,5 +18,6 @@ main();
 app.use("/", userRoutes);
 app.use("/reserve",reservationRoutes);
 app.use("/guest",guestRoutes);
+app.use("/viewmenu",menuRoutes)
 app.use("/email",emailRoutes);
 app.listen(port, () => console.log(`Server starts listening on port ${port}`));
