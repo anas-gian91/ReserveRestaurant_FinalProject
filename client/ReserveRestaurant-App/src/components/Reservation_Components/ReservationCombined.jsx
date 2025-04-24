@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import UserDetailsForm from './UserDetailsform';
 import ReservationForm from './ReservationForm';
@@ -17,6 +18,7 @@ const ReservationCombined = () => {
         place_category: '',
         noOfTable: '',
     });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -78,6 +80,7 @@ const ReservationCombined = () => {
     
             console.log(response.data);
             alert(response.data.msg);
+            navigate('/verification')
         } catch (error) {
             console.error(error);
             const msg = error.response?.data?.msg || 'Something went wrong.';

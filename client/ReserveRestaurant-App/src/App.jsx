@@ -8,6 +8,7 @@ import Contact from './components/contactform';
 import CombinedForm from './components/Reservation_Components/ReservationCombined';
 import Menu from './components/Menu_Component/mainMenu';
 import GuestForm from './components/User_Component/GuestForm';
+import VerificationPage from './components/Reservation_Components/ReservationVerificationEmail';
 
 function App() {
   return(
@@ -17,6 +18,7 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/reservation" element={<CombinedForm/>}/>
+      <Route path= "/verification" element={<VerificationPage/>}/>
       <Route path="/menu" element={<Menu/>}/>
       <Route path="/contact" element = {<Contact/>}/>
       <Route path="/login" element={<Login/>}/>

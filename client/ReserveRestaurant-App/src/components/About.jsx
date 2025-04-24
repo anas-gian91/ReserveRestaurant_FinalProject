@@ -13,10 +13,9 @@ function About() {
                     Built with a user-friendly interface, the app makes it easy to:
                 </p>
                 <ul>
-                    <li>Reserve, cancel, or modify table bookings</li>
+                    <li>Reserve table bookings</li>
                     <li>Select from available tables in real-time</li>
-                    <li>Browse the menu and place orders directly</li>
-                    <li>View reservation history and manage account settings</li>
+                    <li>Browse the menu</li>
                 </ul>
                 <p className="mb-3">
                     The application is fully responsive and works smoothly across all devices, ensuring a seamless experience wherever you are.
