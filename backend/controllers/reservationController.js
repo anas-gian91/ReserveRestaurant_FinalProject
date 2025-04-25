@@ -27,7 +27,7 @@ const ReservationCreate = async (req, res) => {
         await sendEmail(
             user.email,
             `Reservation Confirmation Message`,
-            `Dear ${user.name},\n\nYour reservation has been successfully created.\n\nReservation Details:\n- Reservation ID: ${reservation._id}\n- Date: ${reservationData.date}\n- Time: ${reservationData.time}\n\nThank you for choosing us!\n\nBest regards,\nYour Company Name`
+            `Dear ${user.Fname} ${user.Lname},\n\nYour reservation has been successfully created.\n\nReservation Details:\n- Reservation ID: ${reservation._id}\n- Date: ${reservationData.reservationDate}\n- Time: ${reservationData.reservationTime}\n TableNo:${reservationData.noOfTable}\n\nThank you for choosing us!\n\nBest regards,\nReserveRestaurant`
         );
     } catch (error) {
         console.error("Error sending email:", error);
@@ -59,7 +59,7 @@ const ReservationCreate = async (req, res) => {
             await sendEmail(
                 guestData.email,
                 `Reservation Confirmation Message`,
-                `Dear ${guestData.name},\n\nYour reservation has been successfully created.\n\nReservation Details:\n- Reservation ID: ${reservation._id}\n- Date: ${reservationData.date}\n- Time: ${reservationData.time}\n\nThank you for choosing us!\n\nBest regards,\nYour Company Name`
+                `Dear ${guestData.Fname} ${guestData.Lname},\n\nYour reservation has been successfully created.\nReservation Details:\n Reservation No: ${reservationData._id} \n-Reservation Date: ${reservationData.reservationDate}\n- Time: ${reservationData.reservationTime}\n\nThank you for choosing us!\n\nBest regards,\nReserveRestaurant`
             )
         }catch (error){
             console.error("Error sending email:", error);
