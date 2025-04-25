@@ -21,7 +21,7 @@ function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setResponseMessage('');
+    setResponseMessage('');  // Clear previous messages
 
     try {
       // Send POST request to the backend API
@@ -29,6 +29,7 @@ function ContactForm() {
 
       // Set the response message
       setResponseMessage(response.data.message);
+      // Reset the form fields after successful submission
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
       console.error('Error submitting the contact form:', error);
