@@ -1,5 +1,6 @@
 const Reservation = require('../models/reservationModel');
 const Guest = require('../models/guestModel');
+const User = require('../models/userModel');
 const { sendEmail } = require('./emailController'); 
 
 const ReservationCreate = async (req, res) => {
@@ -17,16 +18,21 @@ const ReservationCreate = async (req, res) => {
                 status: 'pending',
             });
             /*Additional logic for sending a confirm email for user*/
-            try{
-                await sendEmail(
-                    reservationData.email,
-                    `Reservation Confirmation Message`,
-                    `Dear ${reservationData.userId.name},\n\nYour reservation has been successfully created.\n\nReservation Details:\n- Reservation ID: ${reservation._id}\n- Date: ${reservationData.date}\n- Time: ${reservationData.time}\n\nThank you for choosing us!\n\nBest regards,\nYour Company Name`
-                )
-            }catch (error){
-                console.error("Error sending email:", error);
-                return res.status(500).json({ msg: "Error sending confirmation email", error: error.message });
-            }
+        const user = await User.findById(reservationData.userId);
+    if (!user || !user.email) {
+        return res.status(400).json({ msg: "User not found or missing email" });
+    }
+
+    try {
+        await sendEmail(
+            user.email,
+            `Reservation Confirmation Message`,
+            `Dear ${user.name},\n\nYour reservation has been successfully created.\n\nReservation Details:\n- Reservation ID: ${reservation._id}\n- Date: ${reservationData.date}\n- Time: ${reservationData.time}\n\nThank you for choosing us!\n\nBest regards,\nYour Company Name`
+        );
+    } catch (error) {
+        console.error("Error sending email:", error);
+        return res.status(500).json({ msg: "Error sending confirmation email", error: error.message });
+    }
             return res.status(201).json({ msg: "User Reservation created successfully", reservation });
         }
 
