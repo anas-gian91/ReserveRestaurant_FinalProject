@@ -1,29 +1,98 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const [responseMessage, setResponseMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  // Handle form field changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setResponseMessage('');
+
+    try {
+      // Send POST request to the backend API
+      const response = await axios.post('http://localhost:8020/contact/contact', formData);
+
+      // Set the response message
+      setResponseMessage(response.data.message);
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Error submitting the contact form:', error);
+      setResponseMessage('There was an error submitting your message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container mt-5">
       <div className="card shadow p-4">
         <h2 className="mb-4 text-center">Contact Us</h2>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Name</label>
-            <input type="text" className="form-control" placeholder="Name" required />
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="mb-3">
             <label className="form-label">Email</label>
-            <input type="email" className="form-control" placeholder="Email" required />
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="mb-4">
             <label className="form-label">Message</label>
-            <textarea className="form-control" placeholder="Message" rows="5" required></textarea>
+            <textarea
+              className="form-control"
+              placeholder="Message"
+              name="message"
+              rows="5"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            ></textarea>
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">Send</button>
+          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+            {loading ? 'Sending...' : 'Send'}
+          </button>
         </form>
+
+        {responseMessage && (
+          <div className="alert alert-info mt-4 text-center">
+            {responseMessage}
+          </div>
+        )}
 
         <hr className="my-4" />
 

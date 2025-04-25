@@ -7,6 +7,7 @@ const guestRoutes = require("./routes/guestRoutes");
 const emailRoutes = require("./routes/emailRoutes");
 const menuRoutes = require("./routes/menuRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const contactRoutes = require("./routes/contactRoutes");
 const { authMiddleware } = require("./middleware/authMiddle");
 const port = process.env.PORT;
 
@@ -23,4 +24,5 @@ app.use("/guest",guestRoutes);
 app.use("/viewmenu",menuRoutes)
 app.use("/email",emailRoutes);
 app.use("/admin",adminRoutes);
+app.use('/contact', contactRoutes);
 app.listen(port, () => console.log(`Server starts listening on port ${port}`));
