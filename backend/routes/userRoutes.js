@@ -3,8 +3,8 @@ const { registerUser, loginUser, getUserById, getAllUsers,updateUser,deleteUser}
 const {authMiddleware} = require("../middleware/authMiddle");
 const router = express.Router();
 
-router.get("/Users",authMiddleware, getAllUsers);
-router.get("/Users/:id", authMiddleware, getUserById);
+router.get("/user",authMiddleware, getAllUsers);
+router.get("/user/:id", authMiddleware, getUserById);
 router.post("/user/register", registerUser);
 router.post("/user/login",loginUser);
 router.put("/user/:id",authMiddleware, updateUser);

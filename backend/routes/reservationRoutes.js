@@ -4,7 +4,7 @@ const {
   ReservationGetById,
   ReservationUpdate,
   ReservationDelete,
-} = require('../controllers/reservationController');	
+} = require('../controllers/reservationController');
 const router = express.Router();
 
 /*Api for creating a reservation*/

@@ -26,8 +26,23 @@ const Navigator = () => {
                             <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
                         </>
                     ) : (
-                        <li className="nav-item">
-                            <button className="btn btn-outline-light btn-sm ms-2" onClick={handleLogout}>Logout</button>
+                        <li className="nav-item dropdown">
+                         <a
+        className="nav-link dropdown-toggle"
+        href="#"
+        id="userDropdown"
+        role="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+    >
+        My Account
+    </a>
+    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li><Link className="dropdown-item" to="/UserProfile">Profile</Link></li>
+        <li><Link className="dropdown-item" to="/reservations">My Reservations</Link></li>
+        <li><hr className="dropdown-divider" /></li>
+        <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
+    </ul>
                         </li>
                     )}
                 </ul>

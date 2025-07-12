@@ -27,7 +27,7 @@ const authRoleMiddleware = (allowedRoles) => {
       if(!req.user){ 
         return res.status(401).send({ msg: "Unauthorized User" });
       }
-    if(!allowedRoles.includes(req.user.role)){
+    if(!allowedRoles.includes(req.user.role?.toLowerCase())){
       return res.status(403).send({msg:"Forbidden - You don't have permission to access this resource"});
     }
   next();

@@ -20,9 +20,9 @@ main();
 
 app.use("/", userRoutes);
 app.use("/reserve",reservationRoutes);
+app.use("/admin", adminRoutes);
 app.use("/guest",guestRoutes);
 app.use("/viewmenu",menuRoutes)
 app.use("/email",emailRoutes);
-app.use("/admin",adminRoutes);
 app.use('/contact', contactRoutes);
 app.listen(port, () => console.log(`Server starts listening on port ${port}`));

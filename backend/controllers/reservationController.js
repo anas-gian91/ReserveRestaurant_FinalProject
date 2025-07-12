@@ -10,7 +10,6 @@ const ReservationCreate = async (req, res) => {
         if (!reservationData) {
             return res.status(400).json({ msg: "Missing reservation data" });
         }
-
         // If userId is present, create reservation for authenticated user
         if (reservationData.userId) {
             const reservation = await Reservation.create({
@@ -74,7 +73,7 @@ const ReservationCreate = async (req, res) => {
 };
 const ReservationGetById = async (req, res) => {
     try{
-        const reservation = await Reservation.findById(req.params.id).populate('userId');
+        const reservation = await Reservation.findById(req.params.id);
         if (!reservation) {
             return res.status(404).send({ msg: "Reservation not found" });
         }
@@ -84,6 +83,20 @@ const ReservationGetById = async (req, res) => {
         res.status(500).send({ msg: "Error fetching reservation", error: error.message });
     }
 };
+/*
+const ReservationGetByUserById = async (req, res) => {
+    try{
+        const reservation = await Reservation.find({ userId: req.params.id }).populate('userId');
+        if (!reservation || reservation.length === 0) {
+            return res.status(404).send({ msg: "No reservations found for this user" });
+        }
+        res.status(200).send(reservation);
+    }
+    catch (error){
+        res.status(500).send({ msg: "Error fetching reservations", error: error.message });
+    }
+};
+*/
 const ReservationUpdate = async (req, res) => {
     try{
         const updated = await Reservation.findByIdAndUpdate(req.params.id, req.body, { new: true ,runValidators: true});
