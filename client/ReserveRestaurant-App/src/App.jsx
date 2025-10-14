@@ -9,6 +9,7 @@ import CombinedForm from './components/Reservation_Components/ReservationCombine
 import Menu from './components/Menu_Component/mainMenu';
 import GuestForm from './components/User_Component/GuestForm';
 import VerificationPage from './components/Reservation_Components/ReservationVerificationEmail';
+import UserProfile from './components/User_Component/UserProfile';
 
 function App() {
   return(
@@ -24,7 +25,7 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/guest" element={<GuestForm/>}/>
       <Route path="/register" element={<Register/>}/>
-      <Route path="/userprofile" element={<h1>UserProfile</h1>}/>
+      <Route path="/UserProfile" element={<UserProfile/>}/>
       <Route path="*" element={<h1>402 Page not found</h1>}/>
       </Routes>
     </Router>

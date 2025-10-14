@@ -1,4 +1,4 @@
-    const VerificationPage = () => {
+const VerificationPage = () => {
         return (
           <div className="d-flex vh-100 justify-content-center align-items-center bg-light px-3">
             <div className="card shadow-lg p-5 text-center border-0" style={{ maxWidth: '500px', borderRadius: '1rem' }}>
