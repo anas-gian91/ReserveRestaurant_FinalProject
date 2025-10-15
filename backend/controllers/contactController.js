@@ -32,7 +32,7 @@ Your message:
 ${message}
 
 Best regards,
-The Team`;
+The Team\nReserveRestaurant`;
 
     // Send an email to the user confirming their submission
     const emailResult = await sendEmail(email, subject, text);
