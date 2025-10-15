@@ -6,9 +6,18 @@ const UserProfile = () => {
     const [error, setError] = useState(null);
     const [loading,setLoading] = useState(true);
     useEffect(() => {
-      let storedUser = null;
+      const fetchUser = async () =>{
+      try{
+      const token = localStorage.getItem('token');
       const storedUserRaw = localStorage.getItem('user');
-      try { storedUser = storedUserRaw ? JSON.parse(storedUserRaw) : null;  
+      if(!token || !storedUserRaw){
+        setError("User not logged in or missing credentials.");
+        setLoading(false);
+        return;
+      }
+      let storedUser;
+      try{
+      storedUser = JSON.parse(storedUserRaw);  
                  }catch(e){
                   console.error("Error parsing user data from localStorage:", e);
                   setError("Failed to retrieve user data.");
@@ -16,14 +25,11 @@ const UserProfile = () => {
                   return;
                 }
                  const userId = storedUser?._id || storedUser?.id;
-                const token = storedUser?.token;
-                if(!userId || !token) {
-                  setError( "User not logged in or missing credentials.");
+                 if(!userId){
+                  setError("User ID not found. Invalid user data.");
                   setLoading(false);
                   return;
-                }
-        const fetchUser = async () => {
-            try {              
+                 }             
                 const res = await axios.get(`http://localhost:8020/user/${userId}`,{
                   headers: {
                     Authorization: `Bearer ${token}`
