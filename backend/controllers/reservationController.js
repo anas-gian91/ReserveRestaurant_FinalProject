@@ -86,7 +86,7 @@ const ReservationGetById = async (req, res) => {
 /*
 const ReservationGetByUserById = async (req, res) => {
     try{
-        const reservation = await Reservation.find({ userId: req.params.id }).populate('userId');
+        const reservation = await Reservation.find({ userId: req.params.id }).populate("userId","Fname Lname email").sort({date:1 , reservationTime:1});
         if (!reservation || reservation.length === 0) {
             return res.status(404).send({ msg: "No reservations found for this user" });
         }
