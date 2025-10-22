@@ -83,7 +83,6 @@ const ReservationGetById = async (req, res) => {
         res.status(500).send({ msg: "Error fetching reservation", error: error.message });
     }
 };
-/*
 const ReservationGetByUserById = async (req, res) => {
     try{
         const reservation = await Reservation.find({ userId: req.params.id }).populate("userId","Fname Lname email").sort({date:1 , reservationTime:1});
@@ -96,7 +95,6 @@ const ReservationGetByUserById = async (req, res) => {
         res.status(500).send({ msg: "Error fetching reservations", error: error.message });
     }
 };
-*/
 const ReservationUpdate = async (req, res) => {
     try{
         const updated = await Reservation.findByIdAndUpdate(req.params.id, req.body, { new: true ,runValidators: true});
@@ -125,5 +123,6 @@ module.exports = {
     ReservationCreate,
     ReservationGetById,
     ReservationUpdate,
-    ReservationDelete
+    ReservationDelete,
+    ReservationGetByUserById
 };
