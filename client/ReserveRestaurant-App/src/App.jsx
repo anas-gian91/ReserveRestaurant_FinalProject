@@ -26,6 +26,7 @@ function App() {
       <Route path="/guest" element={<GuestForm/>}/>
       <Route path="/register" element={<Register/>}/>
       <Route path="/UserProfile" element={<UserProfile/>}/>
+      <Route path="/reservations" element={<ReservationsList/>}/>
       <Route path="*" element={<h1>402 Page not found</h1>}/>
       </Routes>
     </Router>
