@@ -10,7 +10,7 @@ import Menu from './components/Menu_Component/mainMenu';
 import GuestForm from './components/User_Component/GuestForm';
 import VerificationPage from './components/Reservation_Components/ReservationVerificationEmail';
 import UserProfile from './components/User_Component/UserProfile';
-
+import ReservationsList from './components/Reservation_Components/ReservationsList';
 function App() {
   return(
     <Router>
