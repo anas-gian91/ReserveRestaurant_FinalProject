@@ -1,7 +1,7 @@
 const ReservationForm = ({ formData, handleChange }) => {
     return (
-        <div className="container my-4">
-            <h2 className="mb-4">Reservation Details</h2>
+        <div>
+            <h4 className="mb-4 fw-bold" style={{ color: '#1a1a2e' }}>Reservation Details</h4>
 
             {[
                 { name: 'reservationDate', label: 'Date of Reservation', type: 'date' },

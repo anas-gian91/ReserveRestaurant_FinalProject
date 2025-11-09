@@ -79,120 +79,149 @@ const Register = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <div className="card shadow p-4">
-        <h2 className="mb-4 text-center">Register</h2>
+    <div className="container my-5">
+      <div className="row justify-content-center">
+        <div className="col-lg-6">
+          <div className="card shadow-lg border-0 rounded-3">
+            <div className="card-body p-5">
+              <div className="text-center mb-4">
+                <div className="mb-3" style={{ fontSize: '48px' }}>👤</div>
+                <h2 className="fw-bold" style={{ color: '#1a1a2e' }}>Create Account</h2>
+                <p className="text-muted">Join us and start making reservations</p>
+              </div>
 
-        {error && <div className="alert alert-danger">{error}</div>}
+              {error && <div className="alert alert-danger">{error}</div>}
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">First Name</label>
-            <input
-              type="text"
-              name="Fname"
-              className="form-control"
-              value={formData.Fname}
-              onChange={handleChange}
-              required
-            />
+              <form onSubmit={handleSubmit}>
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold">First Name</label>
+                    <input
+                      type="text"
+                      name="Fname"
+                      className="form-control form-control-lg"
+                      value={formData.Fname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold">Last Name</label>
+                    <input
+                      type="text"
+                      name="Lname"
+                      className="form-control form-control-lg"
+                      value={formData.Lname}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">Username</label>
+                  <input
+                    type="text"
+                    name="username"
+                    className="form-control form-control-lg"
+                    value={formData.username}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    className="form-control form-control-lg"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label fw-semibold">Password</label>
+                  <input
+                    type="password"
+                    name="password"
+                    className="form-control form-control-lg"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <small className="text-muted">
+                    Must be 8+ characters with uppercase, lowercase, number, and special character
+                  </small>
+                </div>
+
+                <div className="row">
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold">Date of Birth</label>
+                    <input
+                      type="date"
+                      name="DateOfBirth"
+                      className="form-control form-control-lg"
+                      value={formData.DateOfBirth}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label className="form-label fw-semibold">Phone Number</label>
+                    <input
+                      type="text"
+                      name="phone"
+                      className="form-control form-control-lg"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="mb-4">
+                  <label className="form-label fw-semibold">Gender</label>
+                  <select
+                    name="gender"
+                    className="form-select form-select-lg"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+
+                <button
+                  type="submit"
+                  className="btn btn-lg w-100 rounded-pill"
+                  style={{ backgroundColor: '#16c79a', color: '#fff', fontWeight: '600' }}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <span className="spinner-border spinner-border-sm me-2"></span>
+                      Creating Account...
+                    </>
+                  ) : (
+                    'Create Account'
+                  )}
+                </button>
+
+                <div className="mt-4 text-center">
+                  <p className="mb-0">
+                    Already have an account? <Link to="/login" style={{ color: '#16c79a', fontWeight: '600' }}>Login</Link>
+                  </p>
+                </div>
+              </form>
+            </div>
           </div>
-
-          <div className="mb-3">
-            <label className="form-label">Last Name</label>
-            <input
-              type="text"
-              name="Lname"
-              className="form-control"
-              value={formData.Lname}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label className="form-label">Username</label>
-            <input
-              type="text"
-              name="username"
-              className="form-control"
-              value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label className="form-label">Email</label>
-            <input
-              type="email"
-              name="email"
-              className="form-control"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label className="form-label">Password</label>
-            <input
-              type="password"
-              name="password"
-              className="form-control"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label className="form-label">Date of Birth</label>
-            <input
-              type="date"
-              name="DateOfBirth"
-              className="form-control"
-              value={formData.DateOfBirth}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <label className="form-label">Phone Number</label>
-            <input
-              type="text"
-              name="phone"
-              className="form-control"
-              value={formData.phone}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="mb-4">
-            <label className="form-label">Gender</label>
-            <select
-              name="gender"
-              className="form-select"
-              value={formData.gender}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-
-          <button
-            type="submit"
-            className="btn btn-primary w-100"
-            disabled={loading}
-          >
-            {loading ? 'Registering...' : 'Register'}
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );
