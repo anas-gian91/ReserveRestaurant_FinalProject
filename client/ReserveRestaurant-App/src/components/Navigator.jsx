@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // import { Link , useNavigate } from 'react-router-dom';
 
 // const Navigator = () => {
@@ -55,8 +54,7 @@
 
 // export default Navigator;
 
-=======
->>>>>>> 7f41f4abe040eede945155c61dd2c3995fcd3030
+
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 
