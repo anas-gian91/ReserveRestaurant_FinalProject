@@ -67,32 +67,80 @@ const UserProfile = () => {
           return 'text-muted';
       }
     };
-    if (loading) return <div className="container mt-4">Loading profile...</div>;  
-    if (error) return <div className='container mt-4 text-danger'>{error}</div>;
-    if (!user) return <div className='container mt-4'>No user data found.</div>;
+    if (loading) return (
+        <div className="container my-5 text-center">
+            <div className="spinner-border" style={{ color: '#16c79a' }}></div>
+            <p className="mt-3">Loading profile...</p>
+        </div>
+    );
+    if (error) return (
+        <div className='container my-5'>
+            <div className="alert alert-danger text-center">{error}</div>
+        </div>
+    );
+    if (!user) return (
+        <div className='container my-5'>
+            <div className="alert alert-info text-center">No user data found.</div>
+        </div>
+    );
      return (
+     <div className="container my-5">
+      <div className="row justify-content-center">
+        <div className="col-lg-8">
+          <div className="card shadow-lg border-0 rounded-3">
+            <div className="card-header text-center py-4" style={{ backgroundColor: '#16c79a', color: '#fff' }}>
+              <h3 className="mb-0 fw-bold">My Profile</h3>
+            </div>
+            <div className="card-body p-5">
+              <div className="text-center mb-4">
+                <div className="mb-3" style={{ fontSize: '80px' }}>👤</div>
+                <h4 className="fw-bold" style={{ color: '#1a1a2e' }}>
+                  {user.Fname || '-'} {user.Lname || '-'}
+                </h4>
+                <span className={`badge px-3 py-2 ${getStatusDisplay(user.status)}`}>
+                  {user.status || '-'}
+                </span>
+              </div>
 
-     <div className="container mt-5">
-      <div className="card shadow p-4">
-        <h3 className="card-title mb-4">User Profile</h3>
-        <div className="row mb-2">
-          <div className="col-md-6"><strong>Name:</strong> {user.Fname || '-'} {user.Lname || '-'}</div>
-          <div className="col-md-6"><strong>Username:</strong> {user.username || '-'}</div>
-        </div>
-        <div className="row mb-2">
-          <div className="col-md-6"><strong>Email:</strong> {user.email || '-'}</div>
-          <div className="col-md-6"><strong>Phone:</strong> {user.phone || '-'}</div>
-        </div>
-        <div className="row mb-2">
-          <div className="col-md-6"><strong>Gender:</strong> {user.gender ||'-'}</div>
-          <div className="col-md-6"><strong>Date of Birth:</strong> {user.DateOfBirth ? new Date(user.DateOfBirth).toLocaleDateString():'-'}</div>
-        </div>
-        <div className="row mb-2">
-          <div className="col-md-6"><strong>Role:</strong> 
-          <span className= {getRoleDisplay(user.role)}>{user.role||'-'}</span>
-          </div>
-          <div className="col-md-6"><strong>Status:</strong>
-          <span className= {getStatusDisplay(user.status)}> {user.status||'-'}</span>
+              <div className="row g-4">
+                <div className="col-md-6">
+                  <div className="p-3 bg-light rounded">
+                    <small className="text-muted d-block mb-1">Username</small>
+                    <strong>{user.username || '-'}</strong>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="p-3 bg-light rounded">
+                    <small className="text-muted d-block mb-1">Email</small>
+                    <strong>{user.email || '-'}</strong>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="p-3 bg-light rounded">
+                    <small className="text-muted d-block mb-1">Phone</small>
+                    <strong>{user.phone || '-'}</strong>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="p-3 bg-light rounded">
+                    <small className="text-muted d-block mb-1">Gender</small>
+                    <strong>{user.gender || '-'}</strong>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="p-3 bg-light rounded">
+                    <small className="text-muted d-block mb-1">Date of Birth</small>
+                    <strong>{user.DateOfBirth ? new Date(user.DateOfBirth).toLocaleDateString() : '-'}</strong>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <div className="p-3 bg-light rounded">
+                    <small className="text-muted d-block mb-1">Role</small>
+                    <strong className={getRoleDisplay(user.role)}>{user.role || '-'}</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

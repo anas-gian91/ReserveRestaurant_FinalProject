@@ -3,7 +3,7 @@ import React from 'react';
 const UserDetailsForm = ({ formData, handleChange, onEmailBlur }) => {
     return (
         <>
-            <h2 className="mb-3">Guest/User Details</h2>
+            <h4 className="mb-4 fw-bold" style={{ color: '#1a1a2e' }}>Your Information</h4>
             {[
                 { name: 'Fname', label: 'First Name' },
                 { name: 'Lname', label: 'Last Name' },
