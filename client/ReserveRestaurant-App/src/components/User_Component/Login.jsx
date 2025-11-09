@@ -15,7 +15,7 @@ const LoginForm = () => {
         e.preventDefault();
         setError(null);
         try {
-            const response = await axios.post('http://localhost:8020/user/login', formData);
+            const response = await axios.post(`${import.meta.env.VITE_URL_BASE_API}/user/login`, formData);
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
             navigate('/');

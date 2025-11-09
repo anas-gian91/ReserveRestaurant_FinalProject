@@ -60,8 +60,8 @@ const Register = () => {
     }
 
     try {
-      await axios.post('http://localhost:8020/user/register', formData);
-      const loginRes = await axios.post('http://localhost:8020/user/login', {
+      await axios.post(`${import.meta.env.VITE_URL_BASE_API}/user/register`, formData);
+      const loginRes = await axios.post(`${import.meta.env.VITE_URL_BASE_API}/user/login`, {
         emailOrUsername: formData.email,
         password: formData.password,
       });
