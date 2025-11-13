@@ -30,7 +30,7 @@ const UserProfile = () => {
                   setLoading(false);
                   return;
                  }             
-                const res = await axios.get(`${import.meta.env.VITE_URL_BASE_API}/user/${userId}`,{
+                const res = await axios.get(`${import.meta.env.VITE_URL_BASE_API}/api/user/${userId}`,{
                   headers: {
                     Authorization: `Bearer ${token}`
                   }

@@ -115,7 +115,7 @@ const ReservationsList = () => {
             setLoading(false);
             return;
         }
-        const response = await axios.get(`http://localhost:8020/reserve/reservations/user/${userId}`,
+        const response = await axios.get(`http://localhost:8020/api/reserve/reservations/user/${userId}`,
             {
                 headers:{
                     Authorization: `Bearer ${token}`

@@ -24,7 +24,7 @@ const GuestForm = () => {
     setSuccess('');
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_URL_BASE_API}/guest/guests`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_URL_BASE_API}/api/guest/guests`, formData);
       setSuccess('Guest created successfully!');
       setFormData({ email: '', Fname: '', Lname: '', DateOfBirth: '', phone: '', gender: '' });
       console.log(response.data); // optional
