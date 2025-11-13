@@ -16,14 +16,29 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.get('/', (req, res)=>{ res.json(
+    {
+      message: "ReserveRestaurant API is running successfully",
+      version: "1.0.0"  
+    })
+});
+app.get ('/health', (req, res)=>{
+    res.status (200).send ('OK');
+});
 
-main();
 
-app.use("/", userRoutes);
-app.use("/reserve",reservationRoutes);
-app.use("/admin", adminRoutes);
-app.use("/guest",guestRoutes);
-app.use("/viewmenu",menuRoutes)
-app.use("/email",emailRoutes);
-app.use('/contact', contactRoutes);
+app.use("/api", userRoutes);
+app.use("/api/reserve",reservationRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/guest",guestRoutes);
+app.use("/api/viewmenu",menuRoutes)
+app.use("/api/email",emailRoutes);
+app.use('/api/contact', contactRoutes);
+
+main()
+    .then(() => console.log("Database connected successfully"))
+    .catch((err) => {
+        console.log("Database connection failed", err);
+        process.exit(1);
+    });
 app.listen(port, () => console.log(`Server starts listening on port ${port}`));
