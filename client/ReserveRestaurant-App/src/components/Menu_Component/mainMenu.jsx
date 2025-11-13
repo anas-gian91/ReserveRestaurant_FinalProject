@@ -4,7 +4,7 @@ import MenuForm from './MenuForm';
 import MenuList from './MenuList';
 
 const Menu = () => {
-  const API_URL = `${import.meta.env.VITE_URL_BASE_API}/viewmenu/menu`;
+  const API_URL = `${import.meta.env.VITE_URL_BASE_API}/api/viewmenu/menu`;
   
   const [menuItems, setMenuItems] = useState([]);
 
