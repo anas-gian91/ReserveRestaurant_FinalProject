@@ -51,5 +51,3 @@ main()
         console.error("Database connection failed", err);
         process.exit(1);
     });
-    
-app.listen(port, () => console.log(`Server starts listening on port ${port}`));
