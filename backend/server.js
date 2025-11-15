@@ -1,7 +1,7 @@
 const dotenv = require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose"); // Add this
+const mongoose = require("mongoose");
 const main = require("./config/connection");
 const userRoutes = require("./routes/userRoutes");
 const reservationRoutes = require("./routes/reservationRoutes");
@@ -41,7 +41,7 @@ app.use("/api/viewmenu", menuRoutes);
 app.use("/api/email", emailRoutes);
 app.use('/api/contact', contactRoutes);
 
-// Connect to database first, then start server
+
 main()
     .then(() => {
         console.log("Database connected successfully");
@@ -51,4 +51,5 @@ main()
         console.error("Database connection failed", err);
         process.exit(1);
     });
+    
 app.listen(port, () => console.log(`Server starts listening on port ${port}`));
