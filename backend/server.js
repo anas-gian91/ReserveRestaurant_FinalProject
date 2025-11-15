@@ -20,13 +20,13 @@ app.get('/', (req, res)=>{ res.json(
     {
       message: "ReserveRestaurant API is running successfully",
       version: "1.0.0"  ,
-      database: mongooawse.connection.readyState === 1 ? "Connected" : "Disconnected"
+      database: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
     })
 });
 app.get ('/health', (req, res)=>{
     res.status (200).json({status:'OK',
         database: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected"
- }),
+ })
 });
 
 
