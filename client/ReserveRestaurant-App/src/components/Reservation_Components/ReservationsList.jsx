@@ -115,7 +115,7 @@ const ReservationsList = () => {
             setLoading(false);
             return;
         }
-        const response = await axios.get(`http://localhost:8020/api/reserve/reservations/user/${userId}`,
+        const response = await axios.get(`${import.meta.env.VITE_URL_BASE_API}/api/reserve/reservations/user/${userId}`,
             {
                 headers:{
                     Authorization: `Bearer ${token}`
