@@ -1,54 +1,47 @@
 const express = require('express');
-const {
-  productCreate,
-  updateProduct,
-  deleteProduct,
-  getAllProducts,
-  getProductById
-} = require('../controllers/menuController');
-const {
-  ReservationUpdate,
-  ReservationDelete,
-  ReservationGetById
-} = require('../controllers/reservationController');
-const {
-  getAllUsers,
-  getUserById,
-  updateUser,
-  deleteUser
-} = require('../controllers/userController');
-const {
-  updateGuest,
-  deleteGuest
-} = require('../controllers/guestController');
-
-const { authMiddleware, authRoleMiddleware } = require('../middleware/authMiddle');
-
 const router = express.Router();
+const { authMiddleware, authRoleMiddleware } = require('../middleware/authMiddle');
+const {
+    getAllUsersAdmin,
+    getPendingUsers,
+    updateUserStatus,
+    updateUserRole,
+    updateUserAdmin,
+    deleteUserAdmin,
+    getSystemStats,
+    bulkApproveUsers,
+    searchUsers
+} = require('../controllers/adminController');
 
-// Middleware to allow only admins
-router.use(authMiddleware, authRoleMiddleware('admin'));
+// All admin routes require authentication and admin role
+router.use(authMiddleware);
+router.use(authRoleMiddleware(['admin']));
 
-// 🛒 Product Management
-router.post('/products', productCreate);
-router.get('/products', getAllProducts);
-router.get('/products/:id', getProductById);
-router.put('/products/:id', updateProduct);
-router.delete('/products/:id', deleteProduct);
+// Get all users with optional filters (?status=pending&role=user)
+router.get('/users', getAllUsersAdmin);
 
-// 📅 Reservation Management
-router.get('/reservations/:id', ReservationGetById);
-router.put('/reservations/:id', ReservationUpdate);
-router.delete('/reservations/:id', ReservationDelete);
+// Get pending users
+router.get('/users/pending', getPendingUsers);
 
-// 👥 User Management
-router.get('/users', getAllUsers);
-router.get('/users/:id', getUserById);
-router.put('/users/:id', updateUser);
-router.delete('/users/:id', deleteUser);
+// Search users (?query=john)
+router.get('/users/search', searchUsers);
 
-// 👤 Guest Management
-router.put('/guests/:id', updateGuest);
-router.delete('/guests/:id', deleteGuest);
+// Get system statistics
+router.get('/stats', getSystemStats);
+
+// Update user status (approve/reject)
+router.patch('/users/:id/status', updateUserStatus);
+
+// Update user role
+router.patch('/users/:id/role', updateUserRole);
+
+// Update user (full update)
+router.put('/users/:id', updateUserAdmin);
+
+// Delete user
+router.delete('/users/:id', deleteUserAdmin);
+
+// Bulk approve users
+router.post('/users/bulk-approve', bulkApproveUsers);
 
 module.exports = router;
