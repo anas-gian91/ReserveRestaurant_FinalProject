@@ -147,7 +147,7 @@ const ReservationCombined = () => {
     // ⬇️ Move this outside of handleSubmit
     const handleEmailBlur = async (email) => {
         try {
-            const res = await axios.get(`/api/guest/guests/email/${email}`); // Adjust route if needed
+            const res = await axios.get(`${import.meta.env.VITE_URL_BASE_API}/api/guest/guests/email/${email}`); // Adjust route if needed
             const guest = res.data;
 
             setFormData(prev => ({
@@ -200,7 +200,7 @@ const ReservationCombined = () => {
                 reservationData.userId = JSON.parse(user).id;
             }
 
-            const response = await axios.post('http://localhost:8020/api/reserve/reservation/create', {
+            const response = await axios.post( `${import.meta.env.VITE_URL_BASE_API}/api/reserve/reservation/create`, {
                 reservationData,
                 guestData: !reservationData.userId ? guestData : undefined,
             });
