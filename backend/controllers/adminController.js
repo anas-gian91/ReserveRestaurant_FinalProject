@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const User = require('../models/userModel');
 const bcrypt = require('bcrypt');
 
 const saltRound = parseInt(process.env.SALT_ROUNDS, 10) || 10;
