@@ -358,6 +358,7 @@ const ReservationCombined = () => {
                             phone: userData.phone || '',
                             gender: userData.gender || '',
                         }));
+                        setIsLoggedIn(true);
                     }
                 } else {
                     setIsLoggedIn(false);
@@ -399,7 +400,7 @@ const ReservationCombined = () => {
                 gender: guest.gender || '',
             }));
         } catch (error) {
-            console.log('No guest found for this email - new guest will be created');
+            console.log('No guest found for this email - new guest will be created',error);
         }
     };
 
@@ -443,7 +444,7 @@ const ReservationCombined = () => {
             }
 
             const response = await axios.post(
-                `${import.meta.env.VITE_URL_BASE_API}/api/reserve/reservation/create`,
+                `${import.meta.env.VITE_URL_BASE_API}/reserve/reservation/create`,
                 {
                     reservationData,
                     guestData: !reservationData.userId ? guestData : undefined,
