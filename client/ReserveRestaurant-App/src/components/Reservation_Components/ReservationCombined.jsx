@@ -444,7 +444,7 @@ const ReservationCombined = () => {
             }
 
             const response = await axios.post(
-                `${import.meta.env.VITE_URL_BASE_API}/reserve/reservation/create`,
+                `${import.meta.env.VITE_URL_BASE_API}/api/reserve/reservation/create`,
                 {
                     reservationData,
                     guestData: !reservationData.userId ? guestData : undefined,

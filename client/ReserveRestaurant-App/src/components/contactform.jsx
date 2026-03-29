@@ -25,7 +25,7 @@ function ContactForm() {
 
     try {
       // Send POST request to the backend API
-      const response = await axios.post(`${import.meta.env.VITE_URL_BASE_API}/contact/contact`, formData);
+      const response = await axios.post(`${import.meta.env.VITE_URL_BASE_API}/api/contact/contact`, formData);
 
       // Set the response message
       setResponseMessage(response.data.message);
