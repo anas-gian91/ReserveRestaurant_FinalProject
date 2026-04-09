@@ -440,7 +440,7 @@ const ReservationCombined = () => {
         try {
             const user = localStorage.getItem('user');
             if (user) {
-                reservationData.userId = JSON.parse(user).id;
+                reservationData.userId = JSON.parse(user).id||JSON.parse(user)._id;
             }
 
             const response = await axios.post(
