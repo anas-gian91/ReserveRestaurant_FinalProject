@@ -5,11 +5,16 @@ const sendEmail = async (email, subject, text)=>{
             throw new Error('Email credentials are not set in environment variables');
         }
         const transporter = nodemailer.createTransport({
-            service: 'yahoo',
+            host: 'smtp.mail.yahoo.com',
+            port: 465,
+            secure: true,
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
             },
+            tls:{
+                rejectUnauthorized: false
+            }
         });
 
         const mailOptions = {
