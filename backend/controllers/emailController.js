@@ -27,5 +27,3 @@ try{
     }
 }
 module.exports={sendEmail};
-
- 
